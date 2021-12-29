@@ -5,6 +5,8 @@ import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
 import COLORS from "../constants/colors";
 import { NavigationContainer } from "@react-navigation/native";
 import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
+import HeaderButton from "../components/UI/HeaderButton";
+import CartScreen from "../screens/shop/CartScreen";
 
 const ProductStack = createNativeStackNavigator();
 const ShopNavigator = () => {
@@ -32,6 +34,7 @@ const ShopNavigator = () => {
           name="ProductDetail"
           component={ProductDetailsScreen}
         />
+        <ProductStack.Screen name="Cart" component={CartScreen} />
       </ProductStack.Navigator>
     </NavigationContainer>
   );
