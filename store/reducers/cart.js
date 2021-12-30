@@ -33,32 +33,24 @@ export default (state = initialState, action) => {
       };
 
     case REMOVE_FROM_CART:
-      const { [action.productId]: removedProduct, ...items } = state.items;
-      let updatedProduct;
-      if (removedProduct.quantity > 1) {
-        const prodTitle = removedProduct.productTitle;
-        const prodPrice = removedProduct.productPrice;
-        const prodQty = removedProduct.quantity - 1;
-        const ProdAmount = removedProduct.totalAmount - prodPrice;
-        updatedProduct = new CartItem(
-          prodQty,
-          prodPrice,
-          prodTitle,
-          ProdAmount
+      const items = { ...state.items };
+
+      const removedItem = { ...state.items[action.productId] };
+
+      let totalAmount = state.totalAmount - removedItem.productPrice;
+      if (totalAmount < 0) totalAmount = 0;
+
+      if (removedItem.quantity === 1) {
+        delete items[action.productId];
+      } else {
+        items[action.productId] = new CartItem(
+          removedItem.quantity - 1,
+          removedItem.productPrice,
+          removedItem.productTitle,
+          removedItem.totalAmount - removedItem.productPrice
         );
       }
-      return {
-        ...state,
-        items: {
-          ...items,
-          ...(removedProduct.quantity > 1
-            ? {
-                [action.productId]: updatedProduct,
-              }
-            : {}),
-        },
-        totalAmount: state.totalAmount - removedProduct.price,
-      };
+      return { ...state, items, totalAmount };
   }
 
   return state;
