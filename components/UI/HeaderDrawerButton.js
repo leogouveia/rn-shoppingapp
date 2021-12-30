@@ -1,20 +1,9 @@
-import React from "react";
-import {
-  Button,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import Colors from "../../constants/colors";
-import CustomTouchableNativeFeedback from "./CustomTouchableNativeFeedback";
 
-const HeaderButton = ({ ...props }) => {
+const HeaderDrawerButton = ({ ...props }) => {
   const androidRipple = Platform.OS === "android" && {
     android_ripple: {
       color: "rgba(0,0,0,0.1)",
@@ -28,7 +17,7 @@ const HeaderButton = ({ ...props }) => {
         {({ pressed }) => (
           <View>
             <Ionicons
-              name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+              name={Platform.OS === "android" ? "md-menu" : "ios-menu"}
               size={30}
               color={
                 Platform.OS === "android"
@@ -45,7 +34,7 @@ const HeaderButton = ({ ...props }) => {
   );
 };
 
-export default HeaderButton;
+export default HeaderDrawerButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {},

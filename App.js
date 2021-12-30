@@ -19,13 +19,6 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, composeWithDevTools());
 
-async function useFonts() {
-  await Font.loadAsync({
-    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
-    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
-  });
-}
-
 export default function App() {
   let [fontsLoaded] = Font.useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -38,7 +31,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <StatusBar style="light" />
+      <StatusBar style={Platform.OS === "android" ? "light" : "auto"} />
       <ShopNavigator />
     </Provider>
   );

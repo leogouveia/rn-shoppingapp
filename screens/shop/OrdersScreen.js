@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import HeaderDrawerButton from "../../components/UI/HeaderDrawerButton";
 
-const OrdersScreen = () => {
+const OrdersScreen = ({ navigation }) => {
   const orders = useSelector((state) => state.orders.orders);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "All Products",
+      headerLeft: () => (
+        <HeaderDrawerButton onPress={() => navigation.toggleDrawer()} />
+      ),
+    });
+  }, [navigation]);
+
   return (
     <View>
       <FlatList

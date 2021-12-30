@@ -1,20 +1,16 @@
-import "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform, StyleSheet } from "react-native";
-import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
+import "react-native-gesture-handler";
+import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import colors from "../constants/colors";
 import COLORS from "../constants/colors";
-import {
-  getFocusedRouteNameFromRoute,
-  NavigationContainer,
-} from "@react-navigation/native";
-import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
-
 import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
-
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { useLayoutEffect } from "react";
-import HeaderButton from "../components/UI/HeaderButton";
+import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
+import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
 
 const defaultOptions = {
   headerTitleStyle: {
@@ -33,11 +29,7 @@ const ProductStack = createNativeStackNavigator();
 
 const ProductsNavigator = ({ navigation, route }) => {
   return (
-    <ProductStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
+    <ProductStack.Navigator screenOptions={defaultOptions}>
       <ProductStack.Screen
         name="ProductsOverview"
         component={ProductsOverviewScreen}
@@ -69,31 +61,36 @@ const DrawerNavigator = () => {
       initialRouteName="Products"
       screenOptions={{
         drawerActiveTintColor: COLORS.primary,
-        ...defaultOptions,
+        headerShown: false,
       }}
     >
       <Drawer.Screen
         name="Products"
         component={ProductsNavigator}
-        options={({ route, navigation }) => ({
-          headerTitle: (() => {
-            const routeName = getFocusedRouteNameFromRoute(route);
-
-            switch (routeName) {
-              case "ProductsOverview":
-              case "Products":
-                return "All Products";
-            }
-            return routeName;
-          })(),
-          ...(getFocusedRouteNameFromRoute(route) === "ProductsOverview" && {
-            headerRight: () => (
-              <HeaderButton onPress={() => navigation.navigate("Cart")} />
-            ),
-          }),
-        })}
+        options={{
+          drawerIcon: (drawerConfig) => (
+            <Ionicons
+              name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+              size={23}
+              color={drawerConfig.color}
+            />
+          ),
+        }}
       />
-      <Drawer.Screen name="Orders" component={OrdersNavigator} />
+      <Drawer.Screen
+        name="OrdersStack"
+        options={{
+          title: "Orders",
+          drawerIcon: (drawerConfig) => (
+            <Ionicons
+              name={Platform.OS === "android" ? "md-list" : "ios-list"}
+              size={23}
+              color={drawerConfig.color}
+            />
+          ),
+        }}
+        component={OrdersNavigator}
+      />
     </Drawer.Navigator>
   );
 };

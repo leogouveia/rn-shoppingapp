@@ -2,7 +2,8 @@ import React, { useLayoutEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
-import HeaderButton from "../../components/UI/HeaderButton";
+import HeaderCartButton from "../../components/UI/HeaderCartButton";
+import HeaderDrawerButton from "../../components/UI/HeaderDrawerButton";
 import * as cartActions from "../../store/actions/cart";
 
 const ProductsOverviewScreen = ({ navigation }) => {
@@ -12,8 +13,11 @@ const ProductsOverviewScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "All Products",
+      headerLeft: () => (
+        <HeaderDrawerButton onPress={() => navigation.toggleDrawer()} />
+      ),
       headerRight: () => (
-        <HeaderButton onPress={() => navigation.navigate("Cart")} />
+        <HeaderCartButton onPress={() => navigation.navigate("Cart")} />
       ),
     });
   }, [navigation]);
