@@ -8,10 +8,13 @@ import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import { composeWithDevTools } from "redux-devtools-extension";
 import cartReducer from "./store/reducers/cart";
+import { StatusBar } from "expo-status-bar";
+import ordersReducer from "./store/reducers/orders";
 
 const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer,
+  orders: ordersReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools());
@@ -35,6 +38,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
+      <StatusBar style="light" />
       <ShopNavigator />
     </Provider>
   );
