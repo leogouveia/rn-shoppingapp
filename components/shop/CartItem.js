@@ -10,7 +10,7 @@ const CartItem = ({ id, title, quantity, amount, onRemove }) => {
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.itemData}>
-        <Text style={styles.amount}>${amount}</Text>
+        <Text style={styles.amount}>${amount.toFixed(2)}</Text>
         <TouchableOpacity
           onPress={() => {
             onRemove(id);

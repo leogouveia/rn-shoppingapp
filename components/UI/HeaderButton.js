@@ -25,13 +25,21 @@ const HeaderButton = ({ ...props }) => {
   return (
     <View style={styles.buttonContainer}>
       <Pressable style={styles.touchable} {...androidRipple} {...props}>
-        <View>
-          <Ionicons
-            name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
-            size={30}
-            color={Platform.OS === "android" ? "#fff" : Colors.primary}
-          />
-        </View>
+        {({ pressed }) => (
+          <View>
+            <Ionicons
+              name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+              size={30}
+              color={
+                Platform.OS === "android"
+                  ? "#fff"
+                  : pressed
+                  ? Colors.primaryTrasparent20
+                  : Colors.primary
+              }
+            />
+          </View>
+        )}
       </Pressable>
     </View>
   );
@@ -42,13 +50,10 @@ export default HeaderButton;
 const styles = StyleSheet.create({
   buttonContainer: {},
   touchable: ({ pressed }) => ({
-    padding: 10,
+    padding: Platform.OS !== "android" ? 3 : 10,
     borderWidth: 0,
     borderColor: "white",
     borderRadius: 100,
     overflow: "hidden",
-    ...(pressed && Platform.OS !== "android"
-      ? { backgroundColor: "rgba(0, 0, 0, 0.2)" }
-      : {}),
   }),
 });

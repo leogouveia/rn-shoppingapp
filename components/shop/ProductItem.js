@@ -6,7 +6,6 @@ import {
   Button,
   Image,
   TouchableOpacity,
-  TouchableOpacityComponent,
   Platform,
   TouchableNativeFeedback,
 } from "react-native";
@@ -14,7 +13,7 @@ import {
 import colors from "../../constants/colors";
 
 const ProductItem = ({ image, title, price, onViewDetail, onAddToCart }) => {
-  let TouchableCmp = TouchableOpacityComponent;
+  let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android" && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }

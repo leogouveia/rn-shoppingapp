@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
@@ -14,6 +15,13 @@ const rootReducer = combineReducers({
 });
 
 const store = createStore(rootReducer, composeWithDevTools());
+
+async function useFonts() {
+  await Font.loadAsync({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
+}
 
 export default function App() {
   let [fontsLoaded] = Font.useFonts({
