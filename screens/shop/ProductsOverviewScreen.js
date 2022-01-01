@@ -12,7 +12,7 @@ const ProductsOverviewScreen = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "All Products",
+      title: "All Products",
       headerLeft: () => (
         <HeaderDrawerButton onPress={() => navigation.toggleDrawer()} />
       ),

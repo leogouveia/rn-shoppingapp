@@ -27,7 +27,7 @@ const defaultOptions = {
 
 const ProductStack = createNativeStackNavigator();
 
-const ProductsNavigator = ({ navigation, route }) => {
+const ProductsNavigator = () => {
   return (
     <ProductStack.Navigator screenOptions={defaultOptions}>
       <ProductStack.Screen

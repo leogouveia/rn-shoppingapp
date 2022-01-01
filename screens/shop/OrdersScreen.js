@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import OrderItem from "../../components/shop/OrderItem";
 import HeaderDrawerButton from "../../components/UI/HeaderDrawerButton";
 
 const OrdersScreen = ({ navigation }) => {
@@ -20,7 +21,12 @@ const OrdersScreen = ({ navigation }) => {
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id}
-        renderItem={(itemData) => <Text>{itemData.item.totalAmount}</Text>}
+        renderItem={(itemData) => (
+          <OrderItem
+            amount={itemData.item.totalAmount}
+            date={itemData.item.dateString}
+          />
+        )}
       />
     </View>
   );
