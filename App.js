@@ -10,6 +10,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import cartReducer from "./store/reducers/cart";
 import { StatusBar } from "expo-status-bar";
 import ordersReducer from "./store/reducers/orders";
+import colors from "./constants/colors";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+dayjs.extend(localizedFormat);
+
+dayjs.locale("pt-br");
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -31,7 +38,10 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <StatusBar style={Platform.OS === "android" ? "light" : "auto"} />
+      <StatusBar
+        style={Platform.OS === "android" ? "light" : "auto"}
+        backgroundColor={colors.primary}
+      />
       <ShopNavigator />
     </Provider>
   );

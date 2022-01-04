@@ -21,7 +21,9 @@ const ProductDetailsScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    navigation.setOptions({ headerTitle: productTitle });
+    navigation.setOptions({
+      headerTitle: productTitle,
+    });
   }, [navigation, route]);
 
   return (

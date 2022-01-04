@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 class Order {
   constructor(id, items, totalAmount, dateOfOrder) {
     this.id = id;
@@ -7,13 +9,7 @@ class Order {
   }
 
   get dateString() {
-    return this.dateOfOrder.toLocaleDateString(["pt-BR", "en-US"], {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    return dayjs(this.dateOfOrder).format("L LT");
   }
 }
 

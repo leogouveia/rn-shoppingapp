@@ -2,6 +2,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 import { Platform, StyleSheet } from "react-native";
 import "react-native-gesture-handler";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
@@ -11,8 +15,13 @@ import CartScreen from "../screens/shop/CartScreen";
 import OrdersScreen from "../screens/shop/OrdersScreen";
 import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
 import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
+import EditProductScreen from "../screens/user/EditProductScreen";
+import UserProductsScreen from "../screens/user/UserProductsScreen";
 
 const defaultOptions = {
+  ...(Platform.OS === "android"
+    ? TransitionPresets.SlideFromRightIOS
+    : TransitionPresets.DefaultTransition),
   headerTitleStyle: {
     fontFamily: "open-sans-bold",
   },
@@ -25,7 +34,7 @@ const defaultOptions = {
   headerTintColor: Platform.OS === "android" ? "#fff" : COLORS.primary,
 };
 
-const ProductStack = createNativeStackNavigator();
+const ProductStack = createStackNavigator();
 
 const ProductsNavigator = () => {
   return (
@@ -43,13 +52,24 @@ const ProductsNavigator = () => {
   );
 };
 
-const OrdersStack = createNativeStackNavigator();
+const OrdersStack = createStackNavigator();
 
 const OrdersNavigator = () => {
   return (
     <OrdersStack.Navigator screenOptions={defaultOptions}>
       <OrdersStack.Screen name="Orders" component={OrdersScreen} />
     </OrdersStack.Navigator>
+  );
+};
+
+const AdminStack = createStackNavigator();
+
+const AdminNavigator = () => {
+  return (
+    <AdminStack.Navigator screenOptions={defaultOptions}>
+      <AdminStack.Screen name="UserProducts" component={UserProductsScreen} />
+      <AdminStack.Screen name="EditProduct" component={EditProductScreen} />
+    </AdminStack.Navigator>
   );
 };
 
@@ -90,6 +110,20 @@ const DrawerNavigator = () => {
           ),
         }}
         component={OrdersNavigator}
+      />
+      <Drawer.Screen
+        name="AdminStack"
+        options={{
+          title: "User Products", // this is the title of the drawer
+          drawerIcon: (drawerConfig) => (
+            <Ionicons
+              name={Platform.OS === "android" ? "md-create" : "ios-create"}
+              size={23}
+              color={drawerConfig.color}
+            />
+          ),
+        }}
+        component={AdminNavigator}
       />
     </Drawer.Navigator>
   );

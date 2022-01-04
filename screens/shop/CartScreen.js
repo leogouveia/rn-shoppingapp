@@ -1,12 +1,21 @@
 import React from "react";
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Button,
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../../components/shop/CartItem";
 import colors from "../../constants/colors";
 import { removeFromCart } from "../../store/actions/cart";
 import { addOrder } from "../../store/actions/orders";
 
-const CartScreen = () => {
+const CartScreen = ({ navigation }) => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
     return Object.keys(state.cart.items).map((key) => ({
@@ -28,7 +37,17 @@ const CartScreen = () => {
           title="Order Now"
           onPress={() => {
             dispatch(addOrder(cartItems, cartTotalAmount));
+            if (Platform.OS === "android") {
+              ToastAndroid.show(
+                "Order placed successfully!",
+                ToastAndroid.SHORT
+              );
+            } else {
+              Alert.alert("Order placed successfully!");
+            }
+            navigation.goBack();
           }}
+          disabled={cartItems.length === 0}
         />
       </View>
 
@@ -44,6 +63,7 @@ const CartScreen = () => {
             onRemove={(productId) => {
               dispatch(removeFromCart(productId));
             }}
+            deletable
           />
         )}
       ></FlatList>

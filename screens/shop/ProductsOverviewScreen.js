@@ -1,9 +1,10 @@
 import React, { useLayoutEffect } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
 import HeaderCartButton from "../../components/UI/HeaderCartButton";
 import HeaderDrawerButton from "../../components/UI/HeaderDrawerButton";
+import colors from "../../constants/colors";
 import * as cartActions from "../../store/actions/cart";
 
 const ProductsOverviewScreen = ({ navigation }) => {
@@ -22,6 +23,12 @@ const ProductsOverviewScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
+  const handleViewItemDetails = (id, title) => {
+    navigation.navigate("ProductDetail", {
+      productId: id,
+      productTitle: title,
+    });
+  };
   return (
     <FlatList
       data={products}
@@ -31,16 +38,25 @@ const ProductsOverviewScreen = ({ navigation }) => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onAddToCart={() => {
-            dispatch(cartActions.addToCart(itemData.item));
+          onSelect={() => {
+            handleViewItemDetails(itemData.item.id, itemData.item.title);
           }}
-          onViewDetail={() => {
-            navigation.navigate("ProductDetail", {
-              productId: itemData.item.id,
-              productTitle: itemData.item.title,
-            });
-          }}
-        />
+        >
+          <Button
+            title="View Details"
+            color={colors.primary}
+            onPress={() => {
+              handleViewItemDetails(itemData.item.id, itemData.item.title);
+            }}
+          />
+          <Button
+            title="Add To Cart"
+            color={colors.accent}
+            onPress={() => {
+              dispatch(cartActions.addToCart(itemData.item));
+            }}
+          />
+        </ProductItem>
       )}
     ></FlatList>
   );

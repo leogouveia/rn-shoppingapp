@@ -23,8 +23,9 @@ const OrdersScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         renderItem={(itemData) => (
           <OrderItem
-            amount={itemData.item.totalAmount}
+            amount={itemData.item.totalAmount.toFixed(2)}
             date={itemData.item.dateString}
+            items={itemData.item.items}
           />
         )}
       />
