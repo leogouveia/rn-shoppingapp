@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import ShopNavigator from "./navigation/ShopNavigator";
 import productsReducer from "./store/reducers/products";
 import AppLoading from "expo-app-loading";
@@ -11,6 +11,7 @@ import cartReducer from "./store/reducers/cart";
 import { StatusBar } from "expo-status-bar";
 import ordersReducer from "./store/reducers/orders";
 import colors from "./constants/colors";
+import ReduxThunk from "redux-thunk";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import localizedFormat from "dayjs/plugin/localizedFormat";
@@ -24,7 +25,10 @@ const rootReducer = combineReducers({
   orders: ordersReducer,
 });
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(ReduxThunk))
+);
 
 export default function App() {
   let [fontsLoaded] = Font.useFonts({
