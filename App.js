@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import Constants from "expo-constants";
+import { StyleSheet, Text, View } from "react-native";
 import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import ShopNavigator from "./navigation/ShopNavigator";
@@ -30,7 +31,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(ReduxThunk))
 );
 
-export default function App() {
+export default function App(props) {
   let [fontsLoaded] = Font.useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
@@ -50,6 +51,10 @@ export default function App() {
     </Provider>
   );
 }
+
+App.defaultProps = {
+  teste: Constants.manifest.extra.parse.url,
+};
 
 const styles = StyleSheet.create({
   container: {

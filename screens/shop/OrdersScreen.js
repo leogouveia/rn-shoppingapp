@@ -9,7 +9,7 @@ const OrdersScreen = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "All Products",
+      headerTitle: "Orders",
       headerLeft: () => (
         <HeaderDrawerButton onPress={() => navigation.toggleDrawer()} />
       ),

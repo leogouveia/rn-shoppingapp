@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import {
   Alert,
   Button,
@@ -25,6 +25,12 @@ const CartScreen = ({ navigation }) => {
     }));
   });
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: "Your Cart",
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.screen}>
